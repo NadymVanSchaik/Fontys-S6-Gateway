@@ -5,7 +5,7 @@ const { log, ExpressAPILogMiddleware } = require('@rama41222/node-logger');
 
 const config = {
     name: 'gateway',
-    port: 3000,
+    port: 3002,
     host: '0.0.0.0',
 };
 
@@ -27,33 +27,5 @@ app.listen(config.port, config.host, (e)=> {
     logger.info(`${config.name} running on ${config.host}:${config.port}`);
 });
 
-var amqp = require('amqplib/callback_api');
-//TODO to be changed to Azure directive 
-const amqpUrl = process.env.AMQP_URL || 'amqp://localhost:5673';
-
-app.get('/sendMessage', (req, res) => {
-    amqp.connect(amqpUrl, function(error0, connection) {
-        if (error0) {
-            throw error0;
-        }
-        connection.createChannel(function(error1, channel) {
-            if (error1) {
-                throw error1;
-            }
-
-            var queue = 'hello';
-            var msg = 'Hello World!';
-
-            channel.assertQueue(queue, {
-                durable: false
-            });
-            channel.sendToQueue(queue, Buffer.from(msg));
-
-            console.log(" [x] Sent %s", msg);
-            res.status(200).send('Message sent ' + msg);
-        });
-        setTimeout(function() {
-            connection.close();
-        }, 500);
-    });
-});
+const gamesRoute = require('./routes/games');
+app.use('/games', gamesRoute);
