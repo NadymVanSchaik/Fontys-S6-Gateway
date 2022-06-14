@@ -27,8 +27,8 @@ jobs:
     - name: Build and push container image to registry
       uses: docker/build-push-action@v3
       with:
-        context: ./app
+        context: .
         push: true
         tags: index.docker.io/${{ secrets.DOCKER_HUB_USER_NAME }}/gateway:${{ github.sha }}
-        file: ./app/Dockerfile
+        file: ./Dockerfile
         
