@@ -29,6 +29,6 @@ jobs:
       with:
         context: .
         push: true
-        tags: index.docker.io/${{ secrets.DOCKER_HUB_USER_NAME }}/gateway:${{ github.sha }}
+        tags: index.docker.io/${{ secrets.DOCKER_HUB_USER_NAME }}/gateway:latest
         file: ./Dockerfile
         
